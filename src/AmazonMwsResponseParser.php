@@ -1,0 +1,24 @@
+<?php
+
+namespace EolabsIo\AmazonMwsResponseParser;
+
+use EolabsIo\AmazonMwsResponseParser\Exceptions\AmazonMwsResponseParserException;
+use EolabsIo\AmazonMwsResponseParser\Parsers\ListInventorySupplyByNextTokenResponseParser;
+use EolabsIo\AmazonMwsResponseParser\Parsers\ListInventorySupplyResponseParser;
+use EolabsIo\AmazonMwsResponseParser\Support\XMLParser;
+use Illuminate\Support\Collection;
+use SimpleXMLElement;
+
+class AmazonMwsResponseParser extends XMLParser
+{
+
+	public function getParsers(): array
+	{
+		return [
+			'ListInventorySupplyResponse' => ListInventorySupplyResponseParser::class,
+			'ListInventorySupplyByNextTokenResponse' => ListInventorySupplyByNextTokenResponseParser::class,
+		];
+	}
+
+
+}
