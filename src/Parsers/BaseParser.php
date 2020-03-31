@@ -3,6 +3,7 @@
 namespace EolabsIo\AmazonMwsResponseParser\Parsers;
 
 use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 use SimpleXMLElement;
 
 abstract class BaseParser
@@ -54,9 +55,34 @@ abstract class BaseParser
 	}
 //=================
 
-	abstract public function handle(): Collection;
+	public function handle(): Collection
+	{
+		$contentKey = $this->getContentAccessor();
 
-	abstract public function getResponseResult();
+		return collect(['RequestId' => $this->getRequestId(),
+						$contentKey => $this->getContent(),
+						'NextToken' => $this->getNextToken(),
+						]);
+	}
+
+	abstract public function getContentAccessor(): string;
+
+	public function getContent()
+	{
+		$contentAccessor = $this->getContentAccessor();
+		
+		return $this->getElement($contentAccessor, $this->getResponseResult());
+	}
+
+	public function getResultAccessor(): string
+	{
+		return Str::replaceLast( 'ResponseParser', 'Result' ,class_basename(static::class));
+	}
+
+	protected function getResponseResult()
+	{
+		return $this->getElement($this->getResultAccessor());
+	}
 
 	public function getNextToken(): ?string
 	{
