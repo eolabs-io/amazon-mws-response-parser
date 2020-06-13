@@ -29,11 +29,19 @@ abstract class BaseParser
 	}
 
 //=================
+
+	public function getElementsToRemove(): Collection
+	{
+		return collect(['member']);
+	}
+
 	public function recurseResolve($data, $array = []) 
 	{
+		$elementsToRemove = $this->getElementsToRemove();
+
 		foreach($data as $key => $value){
-			if($key == 'member'){
-				$array = array_merge($array, $this->removeMember($value));
+			if($elementsToRemove->contains($key)) {
+				$array = array_merge($array, $this->removeElement($value));
 			}else{
 				$array[$key] = $this->resolve($value);
 			}
@@ -49,7 +57,7 @@ abstract class BaseParser
 				 : $value;
 	}
 
-	public function removeMember($value)
+	public function removeElement($value)
 	{
 		return (is_object($value)) ? [$this->recurseResolve($value)] : $this->recurseResolve($value);
 	}

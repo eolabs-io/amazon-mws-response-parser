@@ -8,6 +8,13 @@ use Illuminate\Support\Collection;
 class ListOrdersResponseParser extends BaseParser
 {
 
+	public function getElementsToRemove(): Collection
+	{
+		$element = parent::getElementsToRemove();
+
+		return $element->merge(['Order', 'TaxClassification', 'PaymentExecutionDetailItem']);
+	}
+
 	public function getContentAccessor(): string
 	{
 		return 'Orders';
