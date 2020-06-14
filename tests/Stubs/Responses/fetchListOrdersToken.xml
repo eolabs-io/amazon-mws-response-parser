@@ -40,10 +40,6 @@
                             <Name>VATNumber</Name>
                             <Value>XXX123</Value>
                         </TaxClassification>
-                        <TaxClassification>
-                            <Name>VATNumber</Name>
-                            <Value>XXX456</Value>
-                        </TaxClassification>
                     </TaxClassifications>
                 </BuyerTaxInfo>
                 <OrderType>StandardOrder</OrderType>

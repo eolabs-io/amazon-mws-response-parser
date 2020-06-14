@@ -40,6 +40,11 @@ abstract class BaseParser
 		$elementsToRemove = $this->getElementsToRemove();
 
 		foreach($data as $key => $value){
+
+			if($elementsToRemove->contains($key."|final")) {
+				return is_array($value) ? $value : [$value];
+			}
+			
 			if($elementsToRemove->contains($key)) {
 				$array = array_merge($array, $this->removeElement($value));
 			}else{
@@ -58,7 +63,7 @@ abstract class BaseParser
 	}
 
 	public function removeElement($value)
-	{
+	{		
 		return (is_object($value)) ? [$this->recurseResolve($value)] : $this->recurseResolve($value);
 	}
 //=================

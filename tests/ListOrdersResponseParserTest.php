@@ -64,6 +64,12 @@ class ListOrdersResponseParserTest extends TestCase
 		// It removes the child label 'TaxClassification'
 		$this->assertEquals($response['Orders'][0]['BuyerTaxInfo']['TaxClassifications'][0]['Name'], "VATNumber");
 		$this->assertEquals($response['Orders'][0]['BuyerTaxInfo']['TaxClassifications'][0]['Value'], "XXX123");
+		$this->assertEquals($response['Orders'][0]['BuyerTaxInfo']['TaxClassifications'][1]['Name'], "VATNumber");
+		$this->assertEquals($response['Orders'][0]['BuyerTaxInfo']['TaxClassifications'][1]['Value'], "XXX456");
+
+		// PaymentMethodDetail|final
+		$this->assertEquals($response['Orders'][1]['PaymentMethodDetails'][0], "CreditCard");
+
 	}
 
 }

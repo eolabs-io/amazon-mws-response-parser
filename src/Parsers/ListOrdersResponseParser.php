@@ -12,7 +12,10 @@ class ListOrdersResponseParser extends BaseParser
 	{
 		$element = parent::getElementsToRemove();
 
-		return $element->merge(['Order', 'TaxClassification', 'PaymentExecutionDetailItem']);
+		return $element->merge(['Order', 
+								'TaxClassification', 
+								'PaymentExecutionDetailItem', 
+								'PaymentMethodDetail|final',]);
 	}
 
 	public function getContentAccessor(): string

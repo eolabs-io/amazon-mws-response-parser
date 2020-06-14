@@ -6,6 +6,7 @@ use EolabsIo\AmazonMwsResponseParser\Exceptions\AmazonMwsResponseParserException
 use EolabsIo\AmazonMwsResponseParser\Parsers\GetServiceStatusResponseParser;
 use EolabsIo\AmazonMwsResponseParser\Parsers\ListInventorySupplyByNextTokenResponseParser;
 use EolabsIo\AmazonMwsResponseParser\Parsers\ListInventorySupplyResponseParser;
+use EolabsIo\AmazonMwsResponseParser\Parsers\ListOrdersByNextTokenResponseParser;
 use EolabsIo\AmazonMwsResponseParser\Parsers\ListOrdersResponseParser;
 use EolabsIo\AmazonMwsResponseParser\Support\XMLParser;
 use Illuminate\Support\Collection;
@@ -21,6 +22,7 @@ class AmazonMwsResponseParser extends XMLParser
 			'ListInventorySupplyByNextTokenResponse' => ListInventorySupplyByNextTokenResponseParser::class,
 			'GetServiceStatusResponse' => GetServiceStatusResponseParser::class,
 			'ListOrdersResponse' => ListOrdersResponseParser::class,
+			'ListOrdersByNextTokenResponse' => ListOrdersByNextTokenResponseParser::class,
 		];
 	}
 
