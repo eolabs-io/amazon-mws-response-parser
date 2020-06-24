@@ -3,6 +3,7 @@
 namespace EolabsIo\AmazonMwsResponseParser;
 
 use EolabsIo\AmazonMwsResponseParser\Exceptions\AmazonMwsResponseParserException;
+use EolabsIo\AmazonMwsResponseParser\Parsers\ErrorResponseParser;
 use EolabsIo\AmazonMwsResponseParser\Parsers\GetServiceStatusResponseParser;
 use EolabsIo\AmazonMwsResponseParser\Parsers\ListInventorySupplyByNextTokenResponseParser;
 use EolabsIo\AmazonMwsResponseParser\Parsers\ListInventorySupplyResponseParser;
@@ -27,6 +28,7 @@ class AmazonMwsResponseParser extends XMLParser
 			'ListOrdersByNextTokenResponse' => ListOrdersByNextTokenResponseParser::class,
 			'ListOrderItemsResponse' => ListOrderItemsResponseParser::class,
 			'ListOrderItemsByNextTokenResponse' => ListOrderItemsByNextTokenResponseParser::class,
+			'ErrorResponse' => ErrorResponseParser::class,
 		];
 	}
 

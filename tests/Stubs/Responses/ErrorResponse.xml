@@ -1,0 +1,9 @@
+<ErrorResponse xmlns="http://mws.amazonservices.com/doc/2009-01-01/">
+    <Error>
+        <Type>Sender</Type>
+        <Code>InvalidClientTokenId</Code>
+        <Message> The AWS Access Key Id you provided does not exist in our records. </Message>
+        <Detail>com.amazonservices.mws.model.Error</Detail>
+    </Error>
+    <RequestId>b7afc6c3-6f75-4707-bcf4-0475ad23162c</RequestId>
+</ErrorResponse>
