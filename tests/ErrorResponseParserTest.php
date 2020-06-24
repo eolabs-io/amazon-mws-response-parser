@@ -19,9 +19,8 @@ class ErrorResponseParserTest extends TestCase
 
     	$this->assertEquals($response->get('RequestId'), "b7afc6c3-6f75-4707-bcf4-0475ad23162c");
 		$this->assertEquals($response['Error']['Type'], "Sender");
-		$this->assertEquals($response['Error']['Code'], "InvalidClientTokenId");
-		$this->assertEquals($response['Error']['Message'], " The AWS Access Key Id you provided does not exist in our records. ");
-		$this->assertEquals($response['Error']['Detail'], "com.amazonservices.mws.model.Error");
+		$this->assertEquals($response['Error']['Code'], "InvalidParameterValue");
+		$this->assertEquals($response['Error']['Message'], "The input you have submitted is not valid. Please check your input and try again.");
 	}
 
 }
