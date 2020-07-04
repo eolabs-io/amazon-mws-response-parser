@@ -38,6 +38,8 @@ class ListOrderItemsResponseParserTest extends TestCase
 
 		$this->assertEquals($response['OrderItems'][1]['ASIN'], "BCTU1104UEFB");
 		$this->assertEquals($response['OrderItems'][1]['OrderItemId'], "79039765272157");
+		
+		$this->assertEquals($response['OrderItems'][1]['PromotionIds'][0], "US Core Free Shipping Promotion A3JU1FCINF5SD0");
 	}	
 
 }

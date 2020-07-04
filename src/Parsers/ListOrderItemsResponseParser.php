@@ -12,7 +12,8 @@ class ListOrderItemsResponseParser extends BaseParser
 	{
 		$element = parent::getElementsToRemove();
 
-		return $element->merge(['OrderItem', ]);
+		return $element->merge(['OrderItem', 
+								'PromotionId|final', ]);
 	}
 
 	public function getContentAccessor(): string

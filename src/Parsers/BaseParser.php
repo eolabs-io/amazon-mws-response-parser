@@ -37,6 +37,7 @@ abstract class BaseParser
 
 	public function recurseResolve($data, $array = []) 
 	{
+
 		$elementsToRemove = $this->getElementsToRemove();
 
 		foreach($data as $key => $value){
