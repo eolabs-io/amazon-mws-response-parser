@@ -2,7 +2,6 @@
 <ListFinancialEventsByNextTokenResponse xmlns="http://mws.amazonservices.com/Finances/2018-08-02">
   <ListFinancialEventsByNextTokenResult>
     <FinancialEvents>
-      <ProductAdsPaymentEventList/>
       <RentalTransactionEventList/>
       <PayWithAmazonEventList/>
       <SellerDealPaymentEventList>
@@ -133,7 +132,6 @@
         </AffordabilityExpenseReversalEvent>
       </AffordabilityExpenseReversalEventList>
       <ServiceProviderCreditEventList/>
-      <SellerDealPaymentEventList/>
       <DebtRecoveryEventList/>
       <AdjustmentEventList>
         <AdjustmentEvent>

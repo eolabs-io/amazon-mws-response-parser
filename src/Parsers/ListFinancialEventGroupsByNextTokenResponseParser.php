@@ -1,0 +1,10 @@
+<?php
+
+namespace EolabsIo\AmazonMwsResponseParser\Parsers;
+
+use EolabsIo\AmazonMwsResponseParser\Parsers\ListFinancialEventGroupsResponseParser;
+
+class ListFinancialEventGroupsByNextTokenResponseParser extends ListFinancialEventGroupsResponseParser
+{
+
+}

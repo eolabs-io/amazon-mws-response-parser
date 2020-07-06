@@ -5,7 +5,9 @@ namespace EolabsIo\AmazonMwsResponseParser;
 use EolabsIo\AmazonMwsResponseParser\Exceptions\AmazonMwsResponseParserException;
 use EolabsIo\AmazonMwsResponseParser\Parsers\ErrorResponseParser;
 use EolabsIo\AmazonMwsResponseParser\Parsers\GetServiceStatusResponseParser;
+use EolabsIo\AmazonMwsResponseParser\Parsers\ListFinancialEventGroupsByNextTokenResponseParser;
 use EolabsIo\AmazonMwsResponseParser\Parsers\ListFinancialEventGroupsResponseParser;
+use EolabsIo\AmazonMwsResponseParser\Parsers\ListFinancialEventsByNextTokenResponseParser;
 use EolabsIo\AmazonMwsResponseParser\Parsers\ListFinancialEventsResponseParser;
 use EolabsIo\AmazonMwsResponseParser\Parsers\ListInventorySupplyByNextTokenResponseParser;
 use EolabsIo\AmazonMwsResponseParser\Parsers\ListInventorySupplyResponseParser;
@@ -31,7 +33,9 @@ class AmazonMwsResponseParser extends XMLParser
 			'ListOrderItemsResponse' => ListOrderItemsResponseParser::class,
 			'ListOrderItemsByNextTokenResponse' => ListOrderItemsByNextTokenResponseParser::class,
 			'ListFinancialEventGroupsResponse' => ListFinancialEventGroupsResponseParser::class,
+			'ListFinancialEventGroupsByNextTokenResponse' => ListFinancialEventGroupsByNextTokenResponseParser::class,
 			'ListFinancialEventsResponse' => ListFinancialEventsResponseParser::class,
+			'ListFinancialEventsByNextTokenResponse' => ListFinancialEventsByNextTokenResponseParser::class,
 			'ErrorResponse' => ErrorResponseParser::class,
 		];
 	}
