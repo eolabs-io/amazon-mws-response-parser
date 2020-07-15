@@ -18,7 +18,6 @@ class ListFinancialEventsResponseParser extends BaseParser
 								'ServiceFeeEvent',
 								'ServiceProviderCreditEvent',
 								'SellerDealPaymentEvent',
-								'ProductAdsPaymentEvent', 
 								'DebtRecoveryEvent',
 								'ShipmentEvent',
 								'AffordabilityExpenseEvent',
@@ -30,7 +29,34 @@ class ListFinancialEventsResponseParser extends BaseParser
 								'AdjustmentEvent',
 								'PerformanceBondRefundEvent',
 								'AffordabilityExpenseReversalEvent',
-								'TDSReimbursementEvent', ]);
+								'TDSReimbursementEvent', 
+								'OrderCharge'
+								'OrderChargeAdjustment',
+								'ShipmentItem',
+								'ShipmentFee',
+								'ShipmentFeeAdjustment',
+								'OrderFee',
+								'OrderFeeAdjustment',
+								'DirectPayment',
+								'ItemCharge',
+								'ItemTaxWithheld',
+								'ItemFee',
+								'ItemFeeAdjustmen',
+								'Promotion',
+								'PromotionAdjustment',
+								'ItemChargeAdjustment',
+								'ItemFeeAdjustment',
+								'RefundEvent',
+								'GuaranteeClaimEvent',
+								'ChargebackEvent',
+								'Fee',
+								'CouponPaymentEvent',
+								'SAFETReimbursementEvent',
+								'SAFETReimbursementItem',
+								'SellerReviewEnrollmentPaymentEvent',
+								'FBALiquidationEvent',
+								'NetworkComminglingTransactionEvent',
+							]);
 	}
 
 	public function getContentAccessor(): string

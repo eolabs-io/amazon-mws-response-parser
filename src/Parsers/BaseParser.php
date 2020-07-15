@@ -49,7 +49,7 @@ abstract class BaseParser
 			if($elementsToRemove->contains($key)) {
 				$array = array_merge($array, $this->removeElement($value));
 			}else{
-				$array[$key] = $this->resolve($value);
+				$array[Str::ucfirst($key)] = $this->resolve($value);
 			}
 		}
 
