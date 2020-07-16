@@ -30,7 +30,7 @@ class ListFinancialEventsResponseParser extends BaseParser
 								'PerformanceBondRefundEvent',
 								'AffordabilityExpenseReversalEvent',
 								'TDSReimbursementEvent', 
-								'OrderCharge'
+								'OrderCharge',
 								'OrderChargeAdjustment',
 								'ShipmentItem',
 								'ShipmentFee',
