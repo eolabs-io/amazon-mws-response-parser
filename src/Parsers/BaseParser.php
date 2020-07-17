@@ -14,6 +14,9 @@ abstract class BaseParser
 	/** @var array */
 	private $parsedData;
 
+	/** @var string */
+	public $lastRemovedKey;
+
 
 	public function __construct(SimpleXMLElement $xml)
 	{
@@ -35,6 +38,11 @@ abstract class BaseParser
 		return collect(['member']);
 	}
 
+	public function getElementsToIgnore(): Collection
+	{
+		return collect();
+	}
+
 	public function recurseResolve($data, $array = []) 
 	{
 
@@ -42,11 +50,12 @@ abstract class BaseParser
 
 		foreach($data as $key => $value){
 
-			if($elementsToRemove->contains($key."|final")) {
+			if($this->shouldStopIterating($key)) {
 				return is_array($value) ? $value : [$value];
 			}
 			
-			if($elementsToRemove->contains($key)) {
+			if($this->shouldRemoveElement($key)) {
+				$this->lastRemovedKey = $key;
 				$array = array_merge($array, $this->removeElement($value));
 			}else{
 				$array[Str::ucfirst($key)] = $this->resolve($value);
@@ -54,6 +63,30 @@ abstract class BaseParser
 		}
 
 		return $array;
+	}
+
+	public function shouldStopIterating($key): bool
+	{
+		$elementsToRemove = $this->getElementsToRemove();
+		return $elementsToRemove->contains($key."|final");
+	}
+
+	public function shouldRemoveElement($key): bool
+	{
+		if($this->shouldIgnoreElement($key)) {
+			return false;
+		}
+
+		$elementsToRemove = $this->getElementsToRemove();
+
+		return $elementsToRemove->contains($key);
+	}
+
+	public function shouldIgnoreElement($key): bool
+	{
+		$elementsToIgnore = $this->getElementsToIgnore();
+
+		return $elementsToIgnore->contains($this->lastRemovedKey."|".$key);
 	}
 
 	public function resolve($value)

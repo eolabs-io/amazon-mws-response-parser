@@ -10,9 +10,9 @@ class ListFinancialEventsResponseParser extends BaseParser
 
 	public function getElementsToRemove(): Collection
 	{
-		$element = parent::getElementsToRemove();
+		$elements = parent::getElementsToRemove();
 
-		return $element->merge(['ProductAdsPaymentEvent',
+		return $elements->merge(['ProductAdsPaymentEvent',
 								'RentalTransactionEvent',
 								'PayWithAmazonEvent',
 								'ServiceFeeEvent',
@@ -56,7 +56,22 @@ class ListFinancialEventsResponseParser extends BaseParser
 								'SellerReviewEnrollmentPaymentEvent',
 								'FBALiquidationEvent',
 								'NetworkComminglingTransactionEvent',
+
+								'ChargeComponent',
+								'FeeComponent',
+								'TaxWithheldComponent',
 							]);
+	}
+
+	public function getElementsToIgnore(): Collection
+	{
+		$elements = parent::getElementsToIgnore();
+
+		return $elements->merge(['CouponPaymentEvent|FeeComponent',
+								 'CouponPaymentEvent|ChargeComponent',
+								 'SellerReviewEnrollmentPaymentEvent|FeeComponent',
+								 'SellerReviewEnrollmentPaymentEvent|ChargeComponent',
+								]);
 	}
 
 	public function getContentAccessor(): string
