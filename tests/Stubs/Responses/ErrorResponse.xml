@@ -5,5 +5,5 @@
         <Code>InvalidParameterValue</Code>
         <Message>The input you have submitted is not valid. Please check your input and try again.</Message>
     </Error>
-    <RequestId>b7afc6c3-6f75-4707-bcf4-0475ad23162c</RequestId>
+    <RequestID>b7afc6c3-6f75-4707-bcf4-0475ad23162c</RequestID>
 </ErrorResponse>

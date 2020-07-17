@@ -12,9 +12,9 @@ class ErrorResponseParser extends BaseParser
 		return 'Error';
 	}
 
-	public function getRequestId(): string
+	public function getRequestId(): ?string
 	{
-		return $this->getElement('RequestId');
+		return $this->getElement('RequestID');
 	}
 
 }

@@ -141,7 +141,7 @@ abstract class BaseParser
 		return $this->getElement('ResponseMetadata');
 	}
 
-	public function getRequestId(): string
+	public function getRequestId(): ?string
 	{
 		return $this->getElement('RequestId', $this->getResponseMetadata());
 	}
