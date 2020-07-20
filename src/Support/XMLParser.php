@@ -15,6 +15,8 @@ abstract class XMLParser implements Parser
 
 	public function fromString(string $xml): Collection
 	{
+		$xml = preg_replace('/ns2:/', null, $xml);
+
 		return $this->fromXml(simplexml_load_string($xml));
 	}
 
@@ -45,7 +47,7 @@ abstract class XMLParser implements Parser
 		return $this;
 	}
 
-	private function getXml(): SimpleXMLElement
+	protected function getXml(): SimpleXMLElement
 	{	
 		return $this->xml;
 	}

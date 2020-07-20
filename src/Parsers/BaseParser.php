@@ -24,11 +24,27 @@ abstract class BaseParser
 			 ->parse();
 	}
 
+	protected function beforeParse(SimpleXMLElement $data): self
+	{
+		return $this;
+	}
+
 	public function parse()
 	{
 		$xml = $this->getData();
+
+		$this->beforeParse($xml);
+
     	$xmlArray = json_decode(json_encode($xml));
+
     	$this->setParsedData($this->recurseResolve($xmlArray));
+
+    	$this->afterParse($this->getParsedData());
+	}
+
+	protected function afterParse(array $parsedData): self
+	{
+		return $this;
 	}
 
 //=================
@@ -45,7 +61,6 @@ abstract class BaseParser
 
 	public function recurseResolve($data, $array = []) 
 	{
-
 		$elementsToRemove = $this->getElementsToRemove();
 
 		foreach($data as $key => $value){
