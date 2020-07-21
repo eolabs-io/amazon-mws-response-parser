@@ -19,9 +19,11 @@ abstract class BaseParser
 
 
 	public function __construct(SimpleXMLElement $xml)
-	{
+	{		
 		$this->setData($xml)
-			 ->parse();
+			 ->beforeParse($xml)
+			 ->parse()
+			 ->afterParse( $this->getParsedData(), $xml);
 	}
 
 	protected function beforeParse(SimpleXMLElement $data): self
@@ -32,17 +34,14 @@ abstract class BaseParser
 	public function parse()
 	{
 		$xml = $this->getData();
-
-		$this->beforeParse($xml);
-
     	$xmlArray = json_decode(json_encode($xml));
 
     	$this->setParsedData($this->recurseResolve($xmlArray));
 
-    	$this->afterParse($this->getParsedData());
+    	return $this;
 	}
 
-	protected function afterParse(array $parsedData): self
+	protected function afterParse(array $parsedData, SimpleXMLElement $orignalData): self
 	{
 		return $this;
 	}
@@ -138,7 +137,7 @@ abstract class BaseParser
 
 	public function getResultAccessor(): string
 	{
-		return Str::replaceLast( 'ResponseParser', 'Result' ,class_basename(static::class));
+		return Str::replaceLast( 'ResponseParser', 'Result', class_basename(static::class));
 	}
 
 	protected function getResponseResult()
