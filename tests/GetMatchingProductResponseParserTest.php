@@ -35,7 +35,8 @@ class GetMatchingProductResponseParserTest extends TestCase
 
     	$product = $response['Products'][0]['Product'];
 		$this->assertEquals($product['Identifiers']['MarketplaceASIN']['ASIN'], "B002KT3XRQ");
-		$this->assertEquals($product['AttributeSets']['ItemAttributes'][4], "86 percent nylon, 14% spandex, 9-Inch inseam");
+		$this->assertEquals($product['AttributeSets']['ItemAttributes']['Feature'][4], "86 percent nylon, 14% spandex, 9-Inch inseam");
+		$this->assertEquals($product['AttributeSets']['ItemAttributes']['Binding'], 'Apparel');
 		$this->assertEquals($product['Relationships']['VariationChild'][0]['Identifiers']['MarketplaceASIN']['ASIN'], "B002KT3XQC");
 		$this->assertEquals($product['SalesRankings']['SalesRank'][1]['ProductCategoryId'], "2420095011");
 
@@ -55,14 +56,14 @@ class GetMatchingProductResponseParserTest extends TestCase
     	$product0 = $response['Products'][0]['Product'];
     	$product1 = $response['Products'][1]['Product'];
 		$this->assertEquals($product0['Identifiers']['MarketplaceASIN']['ASIN'], "B002KT3XRQ");
-		$this->assertEquals($product0['AttributeSets']['ItemAttributes'][4], "86 percent nylon, 14% spandex, 9-Inch inseam");
+		$this->assertEquals($product0['AttributeSets']['ItemAttributes']['Feature'][4], "86 percent nylon, 14% spandex, 9-Inch inseam");
 		$this->assertEquals($product0['Relationships']['VariationChild'][0]['Identifiers']['MarketplaceASIN']['ASIN'], "B002KT3XQC");
 		$this->assertEquals($product0['SalesRankings']['SalesRank'][1]['ProductCategoryId'], "2420095011");
 		
 		$this->assertEquals($response['Products'][0]['@attributes']['ASIN'], "B002KT3XRQ");
 
 		$this->assertEquals($product1['Identifiers']['MarketplaceASIN']['ASIN'], "B007WP3DER");
-		$this->assertEquals($product1['AttributeSets']['ItemAttributes'][0], "Select transfer fabric sets the benchmark for moisture transfer and four-way performance stretch");
+		$this->assertEquals($product1['AttributeSets']['ItemAttributes']['Feature'][0], "Select transfer fabric sets the benchmark for moisture transfer and four-way performance stretch");
 		$this->assertEquals($product1['Relationships']['VariationChild'][1]['Identifiers']['MarketplaceASIN']['ASIN'], "B002KT3XQW");
 		$this->assertEquals($product1['SalesRankings']['SalesRank'][1]['ProductCategoryId'], "2420095011");
 		

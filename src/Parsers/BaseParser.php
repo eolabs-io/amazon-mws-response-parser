@@ -60,7 +60,10 @@ abstract class BaseParser
 
 	public function recurseResolve($data, $array = []) 
 	{
-		$elementsToRemove = $this->getElementsToRemove();
+
+		if(! $this->canBeIterated($data) ) {
+			return [$data];
+		}
 
 		foreach($data as $key => $value){
 
@@ -101,6 +104,11 @@ abstract class BaseParser
 		$elementsToIgnore = $this->getElementsToIgnore();
 
 		return $elementsToIgnore->contains($this->lastRemovedKey."|".$key);
+	}
+
+	public function canBeIterated($item): bool
+	{
+		return is_array($item) || is_object($item);
 	}
 
 	public function resolve($value)

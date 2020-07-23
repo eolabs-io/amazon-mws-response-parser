@@ -15,8 +15,8 @@ abstract class XMLParser implements Parser
 
 	public function fromString(string $xml): Collection
 	{	
-		$xml = preg_replace('/ns2:/', null, $xml);
-			
+		$xml = $this->removeNamespaces($xml);
+
 		return $this->fromXml(simplexml_load_string($xml));
 	}
 
@@ -39,6 +39,16 @@ abstract class XMLParser implements Parser
 	}
 
 	abstract public function getParsers(): array;
+
+	public function removeNamespaces(string $subject, array $namespaces = ['ns2']): string
+	{
+		foreach($namespaces as $namespace) {
+			$subject = preg_replace('/'.$namespace.':/', null, $subject);
+			$subject = preg_replace('/xml'.$namespace.'[^=]*="[^"]*"/i', '', $subject);
+		}
+
+		return $subject;
+	}
 
 	private function setXml(SimpleXMLElement $xml)
 	{

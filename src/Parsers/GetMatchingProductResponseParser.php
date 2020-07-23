@@ -1,4 +1,4 @@
-<?php declare(strict_types=1);
+<?php
 
 namespace EolabsIo\AmazonMwsResponseParser\Parsers;
 
@@ -8,16 +8,8 @@ use Illuminate\Support\Collection;
 use SimpleXMLElement;
 
 
-
 class GetMatchingProductResponseParser extends BaseParser
 {
-
-	public function getElementsToRemove(): Collection
-	{
-		$element = parent::getElementsToRemove();
-
-		return $element->merge(['Feature|final', ]);
-	}
 
 	public function getContentAccessor(): string
 	{
@@ -40,6 +32,5 @@ class GetMatchingProductResponseParser extends BaseParser
 		$xml = $this->getData();
 		return $xml->GetMatchingProductResult->count() == 1;
 	}
-
 
 }
