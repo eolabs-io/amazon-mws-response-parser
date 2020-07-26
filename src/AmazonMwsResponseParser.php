@@ -12,6 +12,8 @@ use EolabsIo\AmazonMwsResponseParser\Parsers\ListFinancialEventsByNextTokenRespo
 use EolabsIo\AmazonMwsResponseParser\Parsers\ListFinancialEventsResponseParser;
 use EolabsIo\AmazonMwsResponseParser\Parsers\ListInventorySupplyByNextTokenResponseParser;
 use EolabsIo\AmazonMwsResponseParser\Parsers\ListInventorySupplyResponseParser;
+use EolabsIo\AmazonMwsResponseParser\Parsers\ListMarketplaceParticipationsByNextTokenResponseParser;
+use EolabsIo\AmazonMwsResponseParser\Parsers\ListMarketplaceParticipationsResponseParser;
 use EolabsIo\AmazonMwsResponseParser\Parsers\ListOrderItemsByNextTokenResponseParser;
 use EolabsIo\AmazonMwsResponseParser\Parsers\ListOrderItemsResponseParser;
 use EolabsIo\AmazonMwsResponseParser\Parsers\ListOrdersByNextTokenResponseParser;
@@ -38,6 +40,8 @@ class AmazonMwsResponseParser extends XMLParser
 			'ListFinancialEventsResponse' => ListFinancialEventsResponseParser::class,
 			'ListFinancialEventsByNextTokenResponse' => ListFinancialEventsByNextTokenResponseParser::class,
 			'GetMatchingProductResponse' => GetMatchingProductResponseParser::class,
+			'ListMarketplaceParticipationsResponse' => ListMarketplaceParticipationsResponseParser::class,
+			'ListMarketplaceParticipationsByNextTokenResponse' => ListMarketplaceParticipationsByNextTokenResponseParser::class,
 			'ErrorResponse' => ErrorResponseParser::class,
 		];
 	}
