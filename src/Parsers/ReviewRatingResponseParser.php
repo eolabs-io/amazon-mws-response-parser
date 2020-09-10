@@ -13,8 +13,7 @@ class ReviewRatingResponseParser extends HttpParser
     {
         return collect()
                 ->merge($this->getRatings($dom))
-                ->merge($this->getAverageStarsRating($dom))
-                ->merge($this->getAllReviewsLink($dom));
+                ->merge($this->getAverageStarsRating($dom));
     }
 
     public function getRatings(DOMDocument $dom): Collection
@@ -36,19 +35,5 @@ class ReviewRatingResponseParser extends HttpParser
                                 ->trim();
 
         return collect(['averageStarsRating' => floatval((string)$averageStarsRating)]);
-    }
-
-    public function getAllReviewsLink(DOMDocument $dom): Collection
-    {
-        $url = '';
-        $anchors = $dom->getElementById('cr-pagination-footer-0')->getElementsByTagName('a');
-        foreach ($anchors as $anchor) {
-            foreach ($anchor->attributes as $attribute) {
-                if ($attribute->name == 'href') {
-                    $url = $attribute->value;
-                }
-            }
-        }
-        return collect(['allReviewsLink' => $url]);
     }
 }

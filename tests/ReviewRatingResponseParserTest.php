@@ -19,6 +19,5 @@ class ReviewRatingResponseParserTest extends TestCase
 
         $this->assertEquals(11976, $response['ratings']);
         $this->assertEquals(4.7, $response['averageStarsRating']);
-        $this->assertEquals($allReviewsLink, $response['allReviewsLink']);
     }
 }
