@@ -13,7 +13,7 @@ class ReviewRatingResponseParserTest extends TestCase
     {
         $file = __DIR__ . '/Stubs/Responses/fetchAmazonReview.html';
         $getReviewResponse = file_get_contents($file);
-        $allReviewsLink = '/Premium-derived-only-Non-GMO-Coconuts/product-reviews/B00XM0Y9SE/ref=cm_cr_dp_d_show_all_btm?ie=UTF8&reviewerType=all_reviews';
+        // $allReviewsLink = '/Premium-derived-only-Non-GMO-Coconuts/product-reviews/B00XM0Y9SE/ref=cm_cr_dp_d_show_all_btm?ie=UTF8&reviewerType=all_reviews';
 
         $response = ReviewRatingResponseParser::fromString($getReviewResponse);
 

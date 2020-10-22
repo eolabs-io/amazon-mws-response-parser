@@ -20,7 +20,9 @@
     "require": {
         "php": "^7.3",
         "guzzlehttp/guzzle": "^7.0.1",
-        "illuminate/support": "^8.0"
+        "illuminate/support": "^8.0",
+        "symfony/css-selector": "^5.1",
+        "symfony/dom-crawler": "^5.1"
     },
     "require-dev": {
         "nunomaduro/collision": "^5.0",
