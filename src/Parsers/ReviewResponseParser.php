@@ -19,7 +19,7 @@ class ReviewResponseParser extends DomParser
 
     public function getAverageStarsRating(Crawler $domCrawler): Collection
     {
-        $ratingOutOfText = $domCrawler->filter('span[data-hook="rating-out-of-text"]')->text();
+        $ratingOutOfText = $domCrawler->filter('span[data-hook="rating-out-of-text"]')->text('');
         $averageStarsRating = Str::of($ratingOutOfText)
                                 ->before('out of 5')
                                 ->trim();
@@ -29,7 +29,7 @@ class ReviewResponseParser extends DomParser
 
     public function getNumberOfRatingsAndReviews(Crawler $domCrawler): Collection
     {
-        $filterInfoSection = $domCrawler->filter('div[data-hook="cr-filter-info-review-rating-count"]')->text();
+        $filterInfoSection = $domCrawler->filter('div[data-hook="cr-filter-info-review-rating-count"]')->text('');
         $ratingsAndReviews = Str::of($filterInfoSection)->trim()->explode('|');
         $numberOfRatings = Str::of($ratingsAndReviews[0])->trim()->explode(' ')->first();
         $numberOfReviews = Str::of($ratingsAndReviews[1])->trim()->explode(' ')->first();
@@ -65,12 +65,12 @@ class ReviewResponseParser extends DomParser
 
     public function getProfileName(Crawler $review): string
     {
-        return $review->filter('div[data-hook="genome-widget"] span[class="a-profile-name"]')->text();
+        return $review->filter('div[data-hook="genome-widget"] span[class="a-profile-name"]')->text('');
     }
 
     public function getStarRating(Crawler $review): string
     {
-        $reviewStarRating = $review->filter('i[data-hook="review-star-rating"]')->text();
+        $reviewStarRating = $review->filter('i[data-hook="review-star-rating"]')->text('');
 
         return Str::of($reviewStarRating)
             ->before('out of 5')
@@ -79,12 +79,12 @@ class ReviewResponseParser extends DomParser
 
     public function getTitle(Crawler $review): string
     {
-        return $review->filter('a[data-hook="review-title"]')->text();
+        return $review->filter('a[data-hook="review-title"]')->text('');
     }
 
     public function getDate(Crawler $review): string
     {
-        $tagDateValue = $review->filter('span[data-hook="review-date"]')->text();
+        $tagDateValue = $review->filter('span[data-hook="review-date"]')->text('');
 
         return Str::of($tagDateValue)
             ->after('on')
@@ -113,7 +113,7 @@ class ReviewResponseParser extends DomParser
 
     public function getBody(Crawler $review): string
     {
-        return $review->filter('span[data-hook="review-body"]')->text();
+        return $review->filter('span[data-hook="review-body"]')->text('');
     }
 
     public function getImages(Crawler $review): array

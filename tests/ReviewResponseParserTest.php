@@ -70,6 +70,23 @@ class ReviewResponseParserTest extends TestCase
         $this->assertEquals(23, $response['numberOfRatings']);
     }
 
+    /** @test */
+    public function it_can_parse_review_with_bug()
+    {
+        $file = __DIR__ . '/Stubs/Responses/fetchAmazonProductReviewPageBug.html';
+        $getReviewResponse = file_get_contents($file);
+
+        $response = ReviewResponseParser::fromString($getReviewResponse);
+
+        $this->assertCount(9, $response['reviews']);
+        $this->assertTrue($response['reviews'][1]['verifiedPurchase']);
+        $this->assertFalse($response['reviews'][1]['earlyReviewerRewards']);
+        $this->assertTrue($response['reviews'][4]['verifiedPurchase']);
+        $this->assertTrue($response['reviews'][4]['earlyReviewerRewards']);
+        $this->assertEquals(79, $response['numberOfReviews']);
+        $this->assertEquals(244, $response['numberOfRatings']);
+    }
+
     public function forthReviewBody(): string
     {
         return "This stuff basically cured my anxiety when taken overtime. Gut health has shown to be highly related to brain health-- having healthy gut bacteria sends signals to your brain to relax. Research shows this also having healthy gut bacteria actually repairs the blood brain barrier, which becomes damaged overtime due to relentless stress and anxiety.This stuff works almost too well. After 4 months taking this daily and feeling much better than when I started, the effects are still profound. I find that this can make you feel a tad bit off, almost too calm and clear, it's slightly off putting when surrounded by nominally stressed individuals haha. But if when you're deeply suffering from anxiety, I urge you to please try this.";
