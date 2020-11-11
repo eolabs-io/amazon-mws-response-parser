@@ -47,6 +47,7 @@ class ReviewResponseParser extends DomParser
                     'starRating' => $this->getStarRating($review),
                     'title' => $this->getTitle($review),
                     'date' => $this->getDate($review),
+                    'location' => $this->getLocation($review),
                     'verifiedPurchase' => $this->getVerifiedPurchase($review),
                     'earlyReviewerRewards' => $this->getEarlyReviewerRewards($review),
                     'vineVoice' => $this->getVineVoice($review),
@@ -72,6 +73,10 @@ class ReviewResponseParser extends DomParser
     {
         $reviewStarRating = $review->filter('i[data-hook="review-star-rating"]')->text('');
 
+        if ($reviewStarRating == '') {
+            $reviewStarRating = $review->filter('i[data-hook="cmps-review-star-rating"]')->text('');
+        }
+
         return Str::of($reviewStarRating)
             ->before('out of 5')
             ->trim();
@@ -79,7 +84,13 @@ class ReviewResponseParser extends DomParser
 
     public function getTitle(Crawler $review): string
     {
-        return $review->filter('a[data-hook="review-title"]')->text('');
+        $title = $review->filter('a[data-hook="review-title"]')->text('');
+
+        if ($title == '') {
+            $title = $review->filter('span[data-hook="review-title"]')->text('');
+        }
+
+        return  $title;
     }
 
     public function getDate(Crawler $review): string
@@ -88,6 +99,17 @@ class ReviewResponseParser extends DomParser
 
         return Str::of($tagDateValue)
             ->after('on')
+            ->trim();
+    }
+
+    public function getLocation(Crawler $review): string
+    {
+        $tagDateValue = $review->filter('span[data-hook="review-date"]')->text('');
+
+        return Str::of($tagDateValue)
+            ->after('in')
+            ->before('on')
+            ->replace('the', '')
             ->trim();
     }
 

@@ -21,7 +21,7 @@ class ReviewResponseParserTest extends TestCase
 
         $this->assertCount(10, $response['reviews']);
         $this->assertEquals('R2J4Q876AFF4ID', $firstReview['reviewId']);
-        $this->assertEquals('5.0', $firstReview['starRating']);
+        $this->assertEquals(5.0, $firstReview['starRating']);
         $this->assertEquals('This actually works -My first review of anything in over 15 years,', $firstReview['title']);
         $this->assertEquals('June 17, 2019', $firstReview['date']);
         $this->assertTrue($firstReview['verifiedPurchase']);
@@ -83,6 +83,14 @@ class ReviewResponseParserTest extends TestCase
         $this->assertFalse($response['reviews'][1]['earlyReviewerRewards']);
         $this->assertTrue($response['reviews'][4]['verifiedPurchase']);
         $this->assertTrue($response['reviews'][4]['earlyReviewerRewards']);
+        $this->assertEquals('United States', $response['reviews'][4]['location']);
+
+
+        $this->assertEquals('Chris', $response['reviews'][8]['profileName']);
+        $this->assertEquals(1, $response['reviews'][8]['starRating']);
+        $this->assertEquals('Was inactive probiotic', $response['reviews'][8]['title']);
+        $this->assertEquals('Australia', $response['reviews'][8]['location']);
+
         $this->assertEquals(79, $response['numberOfReviews']);
         $this->assertEquals(244, $response['numberOfRatings']);
     }
