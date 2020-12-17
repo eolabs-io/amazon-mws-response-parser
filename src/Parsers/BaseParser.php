@@ -8,194 +8,196 @@ use SimpleXMLElement;
 
 abstract class BaseParser
 {
-	/** @var array */
-	private $data;
+    /** @var array */
+    private $data;
 
-	/** @var array */
-	private $parsedData;
+    /** @var array */
+    private $parsedData;
 
-	/** @var string */
-	public $lastRemovedKey;
+    /** @var string */
+    public $lastRemovedKey;
 
 
-	public function __construct(SimpleXMLElement $xml)
-	{		
-		$this->setData($xml)
-			 ->beforeParse($xml)
-			 ->parse()
-			 ->afterParse( $this->getParsedData(), $xml);
-	}
+    public function __construct(SimpleXMLElement $xml)
+    {
+        $this->setData($xml)
+             ->beforeParse($xml)
+             ->parse()
+             ->afterParse($this->getParsedData(), $xml);
+    }
 
-	protected function beforeParse(SimpleXMLElement $data): self
-	{
-		return $this;
-	}
+    protected function beforeParse(SimpleXMLElement $data): self
+    {
+        return $this;
+    }
 
-	public function parse()
-	{
-		$xml = $this->getData();
-    	$xmlArray = json_decode(json_encode($xml));
+    public function parse()
+    {
+        $xml = $this->getData();
+        $xmlArray = json_decode(json_encode($xml));
 
-    	$this->setParsedData($this->recurseResolve($xmlArray));
+        $this->setParsedData($this->recurseResolve($xmlArray));
 
-    	return $this;
-	}
+        return $this;
+    }
 
-	protected function afterParse(array $parsedData, SimpleXMLElement $orignalData): self
-	{
-		return $this;
-	}
+    protected function afterParse(array $parsedData, SimpleXMLElement $orignalData): self
+    {
+        return $this;
+    }
 
-//=================
+    //=================
 
-	public function getElementsToRemove(): Collection
-	{
-		return collect(['member']);
-	}
+    public function getElementsToRemove(): Collection
+    {
+        return collect(['member']);
+    }
 
-	public function getElementsToIgnore(): Collection
-	{
-		return collect();
-	}
+    public function getElementsToIgnore(): Collection
+    {
+        return collect();
+    }
 
-	public function recurseResolve($data, $array = []) 
-	{
+    public function recurseResolve($data, $array = [])
+    {
+        if (! $this->canBeIterated($data)) {
+            return [$data];
+        }
 
-		if(! $this->canBeIterated($data) ) {
-			return [$data];
-		}
+        foreach ($data as $key => $value) {
+            if ($this->shouldStopIterating($key)) {
+                return is_array($value) ? $value : [$value];
+            }
 
-		foreach($data as $key => $value){
+            if ($this->shouldRemoveElement($key)) {
+                $this->lastRemovedKey = $key;
+                $array = array_merge($array, $this->removeElement($value));
+            } else {
+                $array[Str::ucfirst($key)] = $this->resolve($value);
+            }
+        }
 
-			if($this->shouldStopIterating($key)) {
-				return is_array($value) ? $value : [$value];
-			}
-			
-			if($this->shouldRemoveElement($key)) {
-				$this->lastRemovedKey = $key;
-				$array = array_merge($array, $this->removeElement($value));
-			}else{
-				$array[Str::ucfirst($key)] = $this->resolve($value);
-			}
-		}
+        return $array;
+    }
 
-		return $array;
-	}
+    public function shouldStopIterating($key): bool
+    {
+        $elementsToRemove = $this->getElementsToRemove();
+        return $elementsToRemove->contains($key."|final");
+    }
 
-	public function shouldStopIterating($key): bool
-	{
-		$elementsToRemove = $this->getElementsToRemove();
-		return $elementsToRemove->contains($key."|final");
-	}
+    public function shouldRemoveElement($key): bool
+    {
+        if ($this->shouldIgnoreElement($key)) {
+            return false;
+        }
 
-	public function shouldRemoveElement($key): bool
-	{
-		if($this->shouldIgnoreElement($key)) {
-			return false;
-		}
+        $elementsToRemove = $this->getElementsToRemove();
 
-		$elementsToRemove = $this->getElementsToRemove();
+        return $elementsToRemove->contains($key);
+    }
 
-		return $elementsToRemove->contains($key);
-	}
+    public function shouldIgnoreElement($key): bool
+    {
+        $elementsToIgnore = $this->getElementsToIgnore();
 
-	public function shouldIgnoreElement($key): bool
-	{
-		$elementsToIgnore = $this->getElementsToIgnore();
+        return $elementsToIgnore->contains($this->lastRemovedKey."|".$key);
+    }
 
-		return $elementsToIgnore->contains($this->lastRemovedKey."|".$key);
-	}
+    public function canBeIterated($item): bool
+    {
+        return is_array($item) || is_object($item);
+    }
 
-	public function canBeIterated($item): bool
-	{
-		return is_array($item) || is_object($item);
-	}
+    public function resolve($value)
+    {
+        return (is_array($value) || is_object($value))
+                 ? $this->recurseResolve($value)
+                 : $value;
+    }
 
-	public function resolve($value)
-	{
-		return (is_array($value) || is_object($value))
-				 ? $this->recurseResolve($value)
-				 : $value;
-	}
+    public function removeElement($value)
+    {
+        return (is_object($value)) ? [$this->recurseResolve($value)] : $this->recurseResolve($value);
+    }
+    //=================
 
-	public function removeElement($value)
-	{		
-		return (is_object($value)) ? [$this->recurseResolve($value)] : $this->recurseResolve($value);
-	}
-//=================
+    public function handle(): Collection
+    {
+        return collect([
+                'RequestId' => $this->getRequestId(),
+                'NextToken' => $this->getNextToken(),
+            ])->merge($this->getContentParameter());
+    }
 
-	public function handle(): Collection
-	{
-		$contentKey = $this->getContentAccessor();
+    abstract public function getContentAccessor(): string;
 
-		return collect(['RequestId' => $this->getRequestId(),
-						$contentKey => $this->getContent(),
-						'NextToken' => $this->getNextToken(),
-						]);
-	}
+    public function getContentParameter(): array
+    {
+        $contentKey = $this->getContentAccessor();
 
-	abstract public function getContentAccessor(): string;
+        return [$contentKey => $this->getContent()];
+    }
 
-	public function getContent()
-	{
-		$contentAccessor = $this->getContentAccessor();
-		
-		return $this->getElement($contentAccessor, $this->getResponseResult());
-	}
+    public function getContent()
+    {
+        $contentAccessor = $this->getContentAccessor();
 
-	public function getResultAccessor(): string
-	{
-		return Str::replaceLast( 'ResponseParser', 'Result', class_basename(static::class));
-	}
+        return $this->getElement($contentAccessor, $this->getResponseResult());
+    }
 
-	protected function getResponseResult()
-	{
-		return $this->getElement($this->getResultAccessor());
-	}
+    public function getResultAccessor(): string
+    {
+        return Str::replaceLast('ResponseParser', 'Result', class_basename(static::class));
+    }
 
-	public function getNextToken(): ?string
-	{
-		return $this->getElement('NextToken', $this->getResponseResult());
-	}
+    protected function getResponseResult()
+    {
+        return $this->getElement($this->getResultAccessor());
+    }
 
-	public function getResponseMetadata()
-	{
-		return $this->getElement('ResponseMetadata');
-	}
+    public function getNextToken(): ?string
+    {
+        return $this->getElement('NextToken', $this->getResponseResult());
+    }
 
-	public function getRequestId(): ?string
-	{
-		return $this->getElement('RequestId', $this->getResponseMetadata());
-	}
+    public function getResponseMetadata()
+    {
+        return $this->getElement('ResponseMetadata');
+    }
 
-	public function getElement($key, $data = null)
-	{
-		$data = $data ?? $this->getParsedData();
-		return data_get($data, $key);
-	}
+    public function getRequestId(): ?string
+    {
+        return $this->getElement('RequestId', $this->getResponseMetadata());
+    }
 
-	public function setData(SimpleXMLElement $data): self
-	{
-		$this->data = $data;
+    public function getElement($key, $data = null)
+    {
+        $data = $data ?? $this->getParsedData();
+        return data_get($data, $key);
+    }
 
-		return $this;
-	}
+    public function setData(SimpleXMLElement $data): self
+    {
+        $this->data = $data;
 
-	public function getData(): SimpleXMLElement
-	{	
-		return $this->data;
-	}
+        return $this;
+    }
 
-	public function setParsedData($data): self
-	{
-		$this->parsedData = $data;
+    public function getData(): SimpleXMLElement
+    {
+        return $this->data;
+    }
 
-		return $this;
-	}
+    public function setParsedData($data): self
+    {
+        $this->parsedData = $data;
 
-	public function getParsedData()
-	{	
-		return $this->parsedData;
-	}
+        return $this;
+    }
 
+    public function getParsedData()
+    {
+        return $this->parsedData;
+    }
 }
