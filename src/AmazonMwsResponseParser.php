@@ -5,6 +5,7 @@ namespace EolabsIo\AmazonMwsResponseParser;
 use EolabsIo\AmazonMwsResponseParser\Support\XMLParser;
 use EolabsIo\AmazonMwsResponseParser\Parsers\ErrorResponseParser;
 use EolabsIo\AmazonMwsResponseParser\Parsers\ListOrdersResponseParser;
+use EolabsIo\AmazonMwsResponseParser\Parsers\GetReportListResponseParser;
 use EolabsIo\AmazonMwsResponseParser\Parsers\RequestReportResponseParser;
 use EolabsIo\AmazonMwsResponseParser\Parsers\ListOrderItemsResponseParser;
 use EolabsIo\AmazonMwsResponseParser\Parsers\GetServiceStatusResponseParser;
@@ -48,6 +49,7 @@ class AmazonMwsResponseParser extends XMLParser
             'GetReportRequestListByNextTokenResponse' => GetReportRequestListByNextTokenResponseParser::class,
             'GetReportRequestCountResponse' => GetReportRequestCountResponseParser::class,
             'CancelReportRequestsResponse' => CancelReportRequestsResponseParser::class,
+            'GetReportListResponse' => GetReportListResponseParser::class,
             'ErrorResponse' => ErrorResponseParser::class,
         ];
     }
