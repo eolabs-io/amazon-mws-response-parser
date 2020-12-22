@@ -7,6 +7,7 @@ use Illuminate\Support\ServiceProvider;
 use EolabsIo\AmazonMwsResponseParser\AmazonMwsResponseParser;
 use EolabsIo\AmazonMwsResponseParser\Parsers\ReviewResponseParser;
 use EolabsIo\AmazonMwsResponseParser\Parsers\ReviewRatingResponseParser;
+use EolabsIo\AmazonMwsResponseParser\Parsers\GetReportResponseParser;
 
 class AmazonMwsResponseParserServiceProvider extends ServiceProvider
 {
@@ -77,6 +78,10 @@ class AmazonMwsResponseParserServiceProvider extends ServiceProvider
 
         $this->app->singleton('amazon-review-response-parser', function () {
             return new ReviewResponseParser;
+        });
+
+        $this->app->singleton('amazon-get-report-response-parser', function () {
+            return new GetReportResponseParser;
         });
     }
 }
