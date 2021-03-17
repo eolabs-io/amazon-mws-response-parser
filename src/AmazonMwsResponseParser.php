@@ -18,6 +18,8 @@ use EolabsIo\AmazonMwsResponseParser\Parsers\GetReportRequestCountResponseParser
 use EolabsIo\AmazonMwsResponseParser\Parsers\ListOrdersByNextTokenResponseParser;
 use EolabsIo\AmazonMwsResponseParser\Parsers\ListFinancialEventGroupsResponseParser;
 use EolabsIo\AmazonMwsResponseParser\Parsers\ListOrderItemsByNextTokenResponseParser;
+use EolabsIo\AmazonMwsResponseParser\Parsers\GetProductCategoriesForSKUResponseParser;
+use EolabsIo\AmazonMwsResponseParser\Parsers\GetProductCategoriesForASINResponseParser;
 use EolabsIo\AmazonMwsResponseParser\Parsers\ListMarketplaceParticipationsResponseParser;
 use EolabsIo\AmazonMwsResponseParser\Parsers\ListFinancialEventsByNextTokenResponseParser;
 use EolabsIo\AmazonMwsResponseParser\Parsers\ListInventorySupplyByNextTokenResponseParser;
@@ -50,6 +52,8 @@ class AmazonMwsResponseParser extends XMLParser
             'GetReportRequestCountResponse' => GetReportRequestCountResponseParser::class,
             'CancelReportRequestsResponse' => CancelReportRequestsResponseParser::class,
             'GetReportListResponse' => GetReportListResponseParser::class,
+            'GetProductCategoriesForASINResponse' => GetProductCategoriesForASINResponseParser::class,
+            'GetProductCategoriesForSKUResponse' => GetProductCategoriesForSKUResponseParser::class,
             'ErrorResponse' => ErrorResponseParser::class,
         ];
     }

@@ -5,7 +5,6 @@ namespace EolabsIo\AmazonMwsClient\Tests;
 use EolabsIo\AmazonMwsResponseParser\Parsers\GetMatchingProductResponseParser;
 use EolabsIo\AmazonMwsResponseParser\Support\Facades\AmazonMwsResponseParser;
 use EolabsIo\AmazonMwsResponseParser\Tests\TestCase;
-use SimpleXMLElement;
 
 class GetMatchingProductResponseParserTest extends TestCase
 {
