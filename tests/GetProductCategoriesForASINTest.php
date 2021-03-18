@@ -32,7 +32,7 @@ class GetProductCategoriesForASINTest extends TestCase
         $this->assertEquals('fbce5b62-67cc-4ab8-86f3-EXAMPLE22e4e', $response->get('RequestId'));
         $this->assertNull($response->get('NextToken'));
 
-        $categories = $response['Self'];
+        $categories = $response['Self'][0];
 
         $this->assertEquals(2420095011, $categories['ProductCategoryId']);
         $this->assertEquals('Compression Shorts', $categories['ProductCategoryName']);
