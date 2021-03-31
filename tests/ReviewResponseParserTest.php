@@ -33,6 +33,8 @@ class ReviewResponseParserTest extends TestCase
         $this->assertEquals(4.3, $response['averageStarsRating']);
         $this->assertEquals(437, $response['numberOfReviews']);
         $this->assertEquals(923, $response['numberOfRatings']);
+
+        $this->assertFalse($response['hasCaptcha']);
     }
 
     /** @test */
@@ -51,6 +53,8 @@ class ReviewResponseParserTest extends TestCase
         $this->assertContains($expectedImage, $response['reviews'][3]['images']);
         $this->assertEquals(17, $response['numberOfReviews']);
         $this->assertEquals(23, $response['numberOfRatings']);
+
+        $this->assertFalse($response['hasCaptcha']);
     }
 
     /** @test */
@@ -68,6 +72,8 @@ class ReviewResponseParserTest extends TestCase
         $this->assertTrue($response['reviews'][2]['earlyReviewerRewards']);
         $this->assertEquals(17, $response['numberOfReviews']);
         $this->assertEquals(23, $response['numberOfRatings']);
+
+        $this->assertFalse($response['hasCaptcha']);
     }
 
     /** @test */
@@ -93,6 +99,19 @@ class ReviewResponseParserTest extends TestCase
 
         $this->assertEquals(79, $response['numberOfReviews']);
         $this->assertEquals(244, $response['numberOfRatings']);
+
+        $this->assertFalse($response['hasCaptcha']);
+    }
+
+    /** @test */
+    public function it_can_detect_captcha()
+    {
+        $file = __DIR__ . '/Stubs/Responses/fetchAmazonProductReviewWithCaptcha.html';
+        $getReviewResponse = file_get_contents($file);
+
+        $response = ReviewResponseParser::fromString($getReviewResponse);
+
+        $this->assertTrue($response['hasCaptcha']);
     }
 
     public function forthReviewBody(): string

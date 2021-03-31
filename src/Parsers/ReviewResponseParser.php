@@ -14,7 +14,8 @@ class ReviewResponseParser extends DomParser
         return collect()
                 ->merge($this->getAverageStarsRating($domCrawler))
                 ->merge($this->getNumberOfRatingsAndReviews($domCrawler))
-                ->merge($this->getReviews($domCrawler));
+                ->merge($this->getReviews($domCrawler))
+                ->merge($this->checkForCaptcha($domCrawler));
     }
 
     public function getAverageStarsRating(Crawler $domCrawler): Collection
@@ -31,8 +32,11 @@ class ReviewResponseParser extends DomParser
     {
         $filterInfoSection = $domCrawler->filter('div[data-hook="cr-filter-info-review-rating-count"]')->text('');
         $ratingsAndReviews = Str::of($filterInfoSection)->trim()->explode('|');
-        $numberOfRatings = Str::of($ratingsAndReviews[0])->trim()->explode(' ')->first();
-        $numberOfReviews = Str::of($ratingsAndReviews[1])->trim()->explode(' ')->first();
+
+        $ratings = data_get($ratingsAndReviews, 0, '');
+        $reviews = data_get($ratingsAndReviews, 1, '');
+        $numberOfRatings = Str::of($ratings)->trim()->explode(' ')->first();
+        $numberOfReviews = Str::of($reviews)->trim()->explode(' ')->first();
 
         return collect(['numberOfReviews' => intval($numberOfReviews), 'numberOfRatings' => intval($numberOfRatings)]);
     }
@@ -144,5 +148,12 @@ class ReviewResponseParser extends DomParser
             ->each(function (Crawler $reviewImage, $i) {
                 return $reviewImage->attr('src');
             });
+    }
+
+    public function checkForCaptcha(Crawler $domCrawler): Collection
+    {
+        $hasCaptcha = $domCrawler->filter('form[action="/errors/validateCaptcha"]')->matches('form');
+
+        return collect(['hasCaptcha' => $hasCaptcha]);
     }
 }
