@@ -16,7 +16,7 @@ class GetProductCategoriesForSKUResponseParser extends BaseParser
     {
         $responseResult = ($this->shouldWrapInArray())
                             ? [data_get($this->getResponseResult(), 'Self')]
-                            : data_get($this->getResponseResult(), 'Self');
+                            : data_get($this->getResponseResult(), 'Self', []);
 
         return collect(['RequestId' => $this->getRequestId(),
                         'Self' => $responseResult,
