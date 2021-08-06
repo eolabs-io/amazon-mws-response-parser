@@ -35,8 +35,8 @@ class ReviewResponseParser extends DomParser
 
         $ratings = data_get($ratingsAndReviews, 0, '');
         $reviews = data_get($ratingsAndReviews, 1, '');
-        $numberOfRatings = Str::of($ratings)->trim()->explode(' ')->first();
-        $numberOfReviews = Str::of($reviews)->trim()->explode(' ')->first();
+        $numberOfRatings = Str::of($ratings)->remove(',')->trim()->explode(' ')->first();
+        $numberOfReviews = Str::of($reviews)->remove(',')->trim()->explode(' ')->first();
 
         return collect(['numberOfReviews' => intval($numberOfReviews), 'numberOfRatings' => intval($numberOfRatings)]);
     }
